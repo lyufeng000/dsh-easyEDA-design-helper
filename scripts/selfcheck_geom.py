@@ -21,23 +21,9 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from eda_geom import parse_contours, parse_contour, bbox_of, point_in_complex  # noqa: E402
+from pcb_copper_check import find_cli  # noqa: E402
 
-FALLBACK_CLI_DIRS = (
-    r"G:\DevelopTools\easyeda-agent\bin",
-    os.path.expanduser(r"~\easyeda-agent\bin"),
-)
 TOL = 0.6  # mil
-
-
-def find_cli():
-    env = os.environ.get("EASYEDA_CLI")
-    if env and os.path.isfile(env):
-        return env
-    for d in FALLBACK_CLI_DIRS:
-        exe = os.path.join(d, "easyeda.exe" if os.name == "nt" else "easyeda")
-        if os.path.isfile(exe):
-            return exe
-    return "easyeda"
 
 
 def run_cli(args, timeout=240):

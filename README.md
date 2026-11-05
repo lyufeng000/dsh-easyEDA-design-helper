@@ -65,7 +65,13 @@ easyeda health
 
 必须看到 `status: found`、`windows` 数组非空、`capabilities` 含 `schematic.v1` 与 `pcb.v1`。`windows` 为空说明连接器未连上 —— 先停下让用户处理，不要盲试。
 
-`easyeda` 不在 `PATH` 时，脚本会依次尝试 `EASYEDA_CLI` 环境变量 → `G:\DevelopTools\easyeda-agent\bin` → `PATH`。
+`easyeda` 不在 `PATH` 时，脚本按下面的顺序查找 —— **全部是用户级或相对位置，不含任何本机绝对路径**：
+
+1. 环境变量 `EASYEDA_CLI`（直接指向可执行文件）
+2. `PATH`（含 `easyeda.exe` / `.cmd` / `.bat`）
+3. 环境变量 `EASYEDA_HOME` 下的 `bin/`
+4. `~/easyeda-agent/bin`、`~/.easyeda-agent/bin`
+5. 与本 skill 并列安装的 `../easyeda-agent/bin`（相对 `scripts/` 目录）
 
 ### 可选
 
@@ -77,12 +83,14 @@ easyeda health
 把本仓库整个目录放进 Agent 的 skills 目录：
 
 ```bash
-# Claude Code（Linux/macOS）
+# Linux / macOS：装到用户 skills 目录（~ 展开成你的 home，不写死绝对路径）
 git clone https://github.com/skytide-chen/dsh-easyEDA-design-helper.git ~/.claude/skills/eda-design-helper
 
-# Windows（目录可以不在 C 盘，用 junction 链接）
-git clone https://github.com/skytide-chen/dsh-easyEDA-design-helper.git G:\DevelopTools\skills\eda-design-helper
-New-Item -ItemType Junction -Path "$env:USERPROFILE\.claude\skills\eda-design-helper" -Target "G:\DevelopTools\skills\eda-design-helper"
+# Windows（PowerShell）：同样装到用户 skills 目录
+git clone https://github.com/skytide-chen/dsh-easyEDA-design-helper.git "$env:USERPROFILE\.claude\skills\eda-design-helper"
+
+# 想让仓库放在别的盘：先 clone 到自选目录，再从 skills 目录建 junction 指过去
+New-Item -ItemType Junction -Path "$env:USERPROFILE\.claude\skills\eda-design-helper" -Target "<自选的仓库目录>"
 ```
 
 装好后 Agent 的技能列表里应出现 `eda-design-helper`，`SKILL.md` 会被自动加载。
