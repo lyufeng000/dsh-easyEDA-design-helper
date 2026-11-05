@@ -164,4 +164,4 @@ scripts/
 
 ## 许可
 
-本仓库未附许可证。若要开源分发，请补 `LICENSE`（如 MIT）；在此之前默认保留所有权利。
+[MIT](LICENSE) © 2026 jinguochen59

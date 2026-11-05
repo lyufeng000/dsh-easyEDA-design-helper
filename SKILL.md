@@ -4,6 +4,7 @@ description: "审查嘉立创EDA专业版（EasyEDA Pro）工程的原理图与 
 metadata:
   author: fattywhale
   version: "1.0.0"
+  license: MIT
 ---
 
 # EDA Design Helper
