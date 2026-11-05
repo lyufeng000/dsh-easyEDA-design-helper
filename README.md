@@ -164,4 +164,4 @@ scripts/
 
 ## 许可
 
-[MIT](LICENSE) © 2026 jinguochen59
+[MIT](LICENSE) © 2026 skytide-chen
